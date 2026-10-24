@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600;700&display=swap"
         rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
         integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
@@ -25,6 +25,7 @@
             --text-dim: #94a3b8;
             --border: rgba(255, 255, 255, 0.1);
             --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
         }
 
         * {
@@ -50,32 +51,63 @@
         header {
             text-align: center;
             margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #a5b4fc;
+            text-transform: uppercase;
+            backdrop-filter: blur(8px);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.25rem;
             font-weight: 800;
-            letter-spacing: -0.025em;
-            background: linear-gradient(to right, #818cf8, #34d399);
+            letter-spacing: -0.03em;
+            margin: 0;
+            background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
         }
 
         .subtitle {
-            color: var(--text-dim);
-            font-size: 1rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin: 0;
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
+            grid-template-columns: 1fr 1.6fr;
             gap: 24px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
             .container {
                 grid-template-columns: 1fr;
             }
@@ -92,7 +124,7 @@
         }
 
         .input-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -111,11 +143,12 @@
             border-radius: 12px;
             padding: 12px 16px;
             color: white;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.2s;
         }
 
-        input:focus {
+        input:focus,
+        select:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
@@ -146,10 +179,15 @@
             gap: 16px;
         }
 
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 16px;
+            margin-top: 8px;
         }
 
         th {
@@ -159,12 +197,14 @@
             color: var(--text-dim);
             padding: 12px 8px;
             border-bottom: 1px solid var(--border);
+            white-space: nowrap;
         }
 
         td {
-            padding: 16px 8px;
+            padding: 14px 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .amount-col {
@@ -173,26 +213,50 @@
             font-weight: 600;
         }
 
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 640px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .summary-card {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(99, 102, 241, 0.1);
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.08);
             border: 1px dashed var(--primary);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 24px;
+            border-radius: 14px;
+            padding: 14px 16px;
+            gap: 4px;
+        }
+
+        .summary-card.highlight {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
         }
 
         .summary-label {
             color: var(--text-dim);
-            font-size: 0.875rem;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
         .summary-value {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .summary-value.highlight-value {
+            color: #34d399;
         }
 
         .actions {
@@ -242,26 +306,66 @@
 <body>
 
     <header>
-        <h1>Smart Allocation Tools</h1>
-        <p class="subtitle">高度な期間按分・比率計算 | プロフェッショナル仕様</p>
+        <div class="brand-badge">
+            <span class="badge-dot"></span>
+            <span>PERIOD & TAX ALLOCATION</span>
+        </div>
+        <h1>Smart按分</h1>
+        <p class="subtitle">期間按分・日割り・月割りと消費税の自動計算</p>
     </header>
 
     <div class="container">
         <div class="card">
-            <h2 style="margin-bottom: 24px; font-size: 1.25rem;">計算設定</h2>
+            <h2 style="margin-bottom: 20px; font-size: 1.25rem;">計算設定</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="input-group">
+                    <label for="calcType">按分タイプ</label>
+                    <select id="calcType">
+                        <option value="daily">日割り計算 (日額 × 日数)</option>
+                        <option value="monthly">月割り計算 (総額 ÷ 月数)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="adjustTarget">端数の調整月</label>
+                    <select id="adjustTarget">
+                        <option value="last" selected>最終月で調整 (標準)</option>
+                        <option value="first">初月(最初の月)で調整</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="input-group">
+                    <label for="taxMode">金額区分</label>
+                    <select id="taxMode">
+                        <option value="inclusive" selected>税込金額で入力</option>
+                        <option value="exclusive">税抜金額で入力</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="taxRate">消費税率</label>
+                    <select id="taxRate">
+                        <option value="0.10" selected>10% (標準税率)</option>
+                        <option value="0.08">8% (軽減税率)</option>
+                        <option value="0">0% (非課税/対象外)</option>
+                    </select>
+                </div>
+            </div>
 
             <div class="input-group">
-                <label for="calcType">按分タイプ</label>
-                <select id="calcType">
-                    <option value="daily">日割り計算 (日額 × 日数)</option>
-                    <option value="monthly">月割り計算 (総額 ÷ 月数)</option>
+                <label for="roundingMode">税額の端数処理</label>
+                <select id="roundingMode">
+                    <option value="floor" selected>切り捨て (実務標準)</option>
+                    <option value="round">四捨五入</option>
+                    <option value="ceil">切り上げ</option>
                 </select>
             </div>
 
             <div id="periodInputs">
                 <div class="input-group">
-                    <label for="totalAmount">対象総額 (税込/税抜)</label>
-                    <input type="text" id="totalAmount" placeholder="120,000" value="120,000">
+                    <label for="totalAmount" id="amountLabel">対象総額 (税込)</label>
+                    <input type="text" id="totalAmount" placeholder="132,000" value="132,000">
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div class="input-group">
@@ -291,16 +395,26 @@
             </div>
 
             <div id="summaryArea" style="display: none;">
-                <div class="summary-card">
-                    <span class="summary-label">合計按分額</span>
-                    <span class="summary-value" id="finalTotal">¥0</span>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <span class="summary-label">税抜合計</span>
+                        <span class="summary-value" id="summaryEx">¥0</span>
+                    </div>
+                    <div class="summary-card">
+                        <span class="summary-label">消費税額 (<span id="summaryRateLabel">10%</span>)</span>
+                        <span class="summary-value" id="summaryTax">¥0</span>
+                    </div>
+                    <div class="summary-card highlight">
+                        <span class="summary-label">税込合計</span>
+                        <span class="summary-value highlight-value" id="summaryIn">¥0</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        'use strict'; // セキュリティ強化: Strictモードの有効化
+        'use strict';
 
         document.addEventListener('DOMContentLoaded', () => {
             const today = new Date();
@@ -310,10 +424,23 @@
             const startDateInput = document.getElementById('startDate');
             const endDateInput = document.getElementById('endDate');
             const amountInput = document.getElementById('totalAmount');
+            const taxModeSelect = document.getElementById('taxMode');
+            const amountLabel = document.getElementById('amountLabel');
 
             if (startDateInput) startDateInput.value = firstDay.toISOString().split('T')[0];
             if (endDateInput) endDateInput.value = nextMonthLastDay.toISOString().split('T')[0];
             if (amountInput) amountInput.value = formatRawValue(amountInput.value);
+
+            // 金額区分の選択に応じてラベルを切り替え
+            if (taxModeSelect && amountLabel) {
+                taxModeSelect.addEventListener('change', () => {
+                    if (taxModeSelect.value === 'inclusive') {
+                        amountLabel.textContent = '対象総額 (税込)';
+                    } else {
+                        amountLabel.textContent = '対象総額 (税抜)';
+                    }
+                });
+            }
 
             amountInput.addEventListener('blur', (e) => {
                 e.target.value = formatRawValue(e.target.value);
@@ -323,7 +450,6 @@
                 e.target.value = e.target.value.replace(/,/g, '');
             });
 
-            // セキュリティ強化: イベントリスナーによる安全なバインディング
             document.getElementById('btnCalculate')?.addEventListener('click', calculate);
             document.getElementById('btnExportCSV')?.addEventListener('click', exportCSV);
             document.getElementById('btnExportPDF')?.addEventListener('click', exportPDF);
@@ -331,7 +457,6 @@
         });
 
         function formatRawValue(val) {
-            // セキュリティ強化: 数値以外の不正な入力を弾く
             let num = val.replace(/[^\d.-]/g, '');
             if (!isNaN(num) && num !== "") {
                 return Number(num).toLocaleString('ja-JP');
@@ -343,14 +468,24 @@
             return '¥' + Math.round(num).toLocaleString('ja-JP');
         }
 
-        function sanitizeHTML(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
+        function applyRounding(val, mode) {
+            if (mode === 'floor') {
+                return Math.floor(val);
+            } else if (mode === 'ceil') {
+                return Math.ceil(val);
+            } else {
+                return Math.round(val);
+            }
         }
 
         function calculate() {
             const type = document.getElementById('calcType').value;
+            const adjustTarget = document.getElementById('adjustTarget').value;
+            const roundingMode = document.getElementById('roundingMode').value;
+            const taxMode = document.getElementById('taxMode').value;
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            const ratePercent = Math.round(taxRate * 100);
+
             const output = document.getElementById('resultOutput');
             const summary = document.getElementById('summaryArea');
 
@@ -359,7 +494,7 @@
             const startStr = document.getElementById('startDate').value;
             const endStr = document.getElementById('endDate').value;
 
-            if (isNaN(total) || !startStr || !endStr) {
+            if (isNaN(total) || total < 0 || !startStr || !endStr) {
                 alert('正しい金額と期間を入力してください');
                 return;
             }
@@ -369,6 +504,14 @@
 
             if (start > end) {
                 alert('開始日は終了日より前の日付にしてください');
+                return;
+            }
+
+            // 期間上限ガード（誤入力によるブラウザフリーズ防止: 最大30年）
+            const maxYears = 30;
+            const yearDiff = end.getFullYear() - start.getFullYear();
+            if (yearDiff > maxYears) {
+                alert(`計算期間は最大${maxYears}年以内に設定してください`);
                 return;
             }
 
@@ -383,48 +526,162 @@
             }
 
             const results = [];
-            let checkTotal = 0;
 
-            if (type === 'daily') {
-                const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
-                const dailyRate = total / totalDays;
+            if (taxMode === 'inclusive') {
+                // 税込金額を基準に按分
+                const totalInclusive = total;
+                let sumIn = 0;
 
-                months.forEach((m) => {
-                    const year = m.getFullYear();
-                    const month = m.getMonth();
-                    const monthStart = new Date(year, month, 1);
-                    const monthEnd = new Date(year, month + 1, 0);
+                if (type === 'daily') {
+                    const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                    const dailyRate = totalInclusive / totalDays;
 
-                    const actualStart = start > monthStart ? start : monthStart;
-                    const actualEnd = end < monthEnd ? end : monthEnd;
+                    months.forEach((m) => {
+                        const year = m.getFullYear();
+                        const month = m.getMonth();
+                        const monthStart = new Date(year, month, 1);
+                        const monthEnd = new Date(year, month + 1, 0);
 
-                    const days = Math.ceil((actualEnd - actualStart) / (1000 * 60 * 60 * 24)) + 1;
-                    const amount = Math.round(days * dailyRate);
+                        const actualStart = start > monthStart ? start : monthStart;
+                        const actualEnd = end < monthEnd ? end : monthEnd;
 
-                    results.push({ period: `${year}年${month + 1}月`, label: `${days}日`, amount: amount });
-                    checkTotal += amount;
+                        const days = Math.ceil((actualEnd - actualStart) / (1000 * 60 * 60 * 24)) + 1;
+                        const amountIn = applyRounding(days * dailyRate, roundingMode);
+
+                        results.push({
+                            period: `${year}年${month + 1}月`,
+                            label: `${days}日`,
+                            amountIn: amountIn
+                        });
+                        sumIn += amountIn;
+                    });
+                } else {
+                    const totalMonths = months.length;
+                    const monthlyRaw = totalInclusive / totalMonths;
+
+                    months.forEach((m) => {
+                        const amountIn = applyRounding(monthlyRaw, roundingMode);
+                        results.push({
+                            period: `${m.getFullYear()}年${m.getMonth() + 1}月`,
+                            label: `1ヶ月`,
+                            amountIn: amountIn
+                        });
+                        sumIn += amountIn;
+                    });
+                }
+
+                // 税込の端数差額調整（初月または最終月に差額を集約）
+                const diffIn = totalInclusive - sumIn;
+                if (results.length > 0) {
+                    const targetIdx = (adjustTarget === 'first') ? 0 : results.length - 1;
+                    results[targetIdx].amountIn += diffIn;
+                }
+
+                // 各行の税抜・税額の算定 (税抜 + 税額 = 税込)
+                let sumEx = 0;
+                let sumTax = 0;
+                results.forEach(r => {
+                    if (taxRate === 0) {
+                        r.amountEx = r.amountIn;
+                        r.amountTax = 0;
+                    } else {
+                        r.amountEx = applyRounding(r.amountIn / (1 + taxRate), roundingMode);
+                        r.amountTax = r.amountIn - r.amountEx;
+                    }
+                    sumEx += r.amountEx;
+                    sumTax += r.amountTax;
                 });
+
+                updateSummary(sumEx, sumTax, totalInclusive, ratePercent);
+
             } else {
-                const totalMonths = months.length;
-                const monthlyRate = Math.floor(total / totalMonths);
+                // 税抜金額を基準に按分
+                const totalExclusive = total;
+                let sumEx = 0;
 
-                months.forEach((m) => {
-                    results.push({ period: `${m.getFullYear()}年${m.getMonth() + 1}月`, label: `1ヶ月`, amount: monthlyRate });
-                    checkTotal += monthlyRate;
+                if (type === 'daily') {
+                    const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                    const dailyRate = totalExclusive / totalDays;
+
+                    months.forEach((m) => {
+                        const year = m.getFullYear();
+                        const month = m.getMonth();
+                        const monthStart = new Date(year, month, 1);
+                        const monthEnd = new Date(year, month + 1, 0);
+
+                        const actualStart = start > monthStart ? start : monthStart;
+                        const actualEnd = end < monthEnd ? end : monthEnd;
+
+                        const days = Math.ceil((actualEnd - actualStart) / (1000 * 60 * 60 * 24)) + 1;
+                        const amountEx = applyRounding(days * dailyRate, roundingMode);
+
+                        results.push({
+                            period: `${year}年${month + 1}月`,
+                            label: `${days}日`,
+                            amountEx: amountEx
+                        });
+                        sumEx += amountEx;
+                    });
+                } else {
+                    const totalMonths = months.length;
+                    const monthlyRaw = totalExclusive / totalMonths;
+
+                    months.forEach((m) => {
+                        const amountEx = applyRounding(monthlyRaw, roundingMode);
+                        results.push({
+                            period: `${m.getFullYear()}年${m.getMonth() + 1}月`,
+                            label: `1ヶ月`,
+                            amountEx: amountEx
+                        });
+                        sumEx += amountEx;
+                    });
+                }
+
+                // 税抜の端数差額調整（初月または最終月に差額を集約）
+                const diffEx = totalExclusive - sumEx;
+                if (results.length > 0) {
+                    const targetIdx = (adjustTarget === 'first') ? 0 : results.length - 1;
+                    results[targetIdx].amountEx += diffEx;
+                }
+
+                // 各行の税額・税込の算定 (税抜 + 税額 = 税込)
+                let sumTax = 0;
+                let sumIn = 0;
+                results.forEach(r => {
+                    if (taxRate === 0) {
+                        r.amountTax = 0;
+                        r.amountIn = r.amountEx;
+                    } else {
+                        r.amountTax = applyRounding(r.amountEx * taxRate, roundingMode);
+                        r.amountIn = r.amountEx + r.amountTax;
+                    }
+                    sumTax += r.amountTax;
+                    sumIn += r.amountIn;
                 });
+
+                updateSummary(totalExclusive, sumTax, sumIn, ratePercent);
             }
 
-            const diff = total - checkTotal;
-            if (results.length > 0) {
-                results[results.length - 1].amount += diff;
-            }
+            // テーブルDOMの生成
+            renderTable(output, results);
+        }
 
-            // テーブル要素の安全な構築 (createElementによるDOM生成)
-            output.innerHTML = '';
+        function updateSummary(ex, tax, inc, ratePercent) {
+            document.getElementById('summaryEx').textContent = formatCurrency(ex);
+            document.getElementById('summaryTax').textContent = formatCurrency(tax);
+            document.getElementById('summaryIn').textContent = formatCurrency(inc);
+            document.getElementById('summaryRateLabel').textContent = `${ratePercent}%`;
+        }
+
+        function renderTable(container, results) {
+            container.innerHTML = '';
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-responsive';
+
             const table = document.createElement('table');
             const thead = document.createElement('thead');
-            // ヘッダーは固定値のため安全
-            thead.innerHTML = '<tr><th>対象期間</th><th>単位</th><th class="amount-col">金額</th></tr>';
+            thead.innerHTML = '<tr><th>対象期間</th><th>単位</th><th class="amount-col">税抜金額</th><th class="amount-col">消費税額</th><th class="amount-col">税込金額</th></tr>';
             table.appendChild(thead);
 
             const tbody = document.createElement('tbody');
@@ -432,24 +689,36 @@
                 const tr = document.createElement('tr');
 
                 const tdPeriod = document.createElement('td');
-                tdPeriod.textContent = r.period; // textContentを使用してXSS防止
+                tdPeriod.textContent = r.period;
 
                 const tdLabel = document.createElement('td');
                 tdLabel.textContent = r.label;
 
-                const tdAmount = document.createElement('td');
-                tdAmount.className = 'amount-col';
-                tdAmount.textContent = formatCurrency(r.amount);
+                const tdEx = document.createElement('td');
+                tdEx.className = 'amount-col';
+                tdEx.textContent = formatCurrency(r.amountEx);
+
+                const tdTax = document.createElement('td');
+                tdTax.className = 'amount-col';
+                tdTax.style.color = 'var(--text-dim)';
+                tdTax.textContent = formatCurrency(r.amountTax);
+
+                const tdIn = document.createElement('td');
+                tdIn.className = 'amount-col';
+                tdIn.style.color = '#34d399';
+                tdIn.textContent = formatCurrency(r.amountIn);
 
                 tr.appendChild(tdPeriod);
                 tr.appendChild(tdLabel);
-                tr.appendChild(tdAmount);
+                tr.appendChild(tdEx);
+                tr.appendChild(tdTax);
+                tr.appendChild(tdIn);
                 tbody.appendChild(tr);
             });
-            table.appendChild(tbody);
-            output.appendChild(table);
 
-            document.getElementById('finalTotal').textContent = formatCurrency(total);
+            table.appendChild(tbody);
+            wrapper.appendChild(table);
+            container.appendChild(wrapper);
         }
 
         function exportCSV() {
@@ -462,10 +731,9 @@
             for (let i = 0; i < rows.length; i++) {
                 let row = [], cols = rows[i].querySelectorAll('td, th');
                 for (let j = 0; j < cols.length; j++) {
-                    let text = cols[j].textContent.replace('¥', '').replace(/,/g, '').replace(/"/g, '""');
+                    let text = cols[j].textContent.replace(/¥/g, '').replace(/,/g, '').replace(/"/g, '""');
 
-                    // セキュリティ強化: CSV（数式）インジェクション対策
-                    // =, +, -, @ から始まる場合はExcel等で数式として実行されるのを防ぐため、先頭に ' を付与
+                    // CSVインジェクション対策
                     if (/^[=+\-@]/.test(text)) {
                         text = "'" + text;
                     }
@@ -476,10 +744,10 @@
             }
 
             const startDate = document.getElementById('startDate').value.replace(/-/g, '');
-            const amount = document.getElementById('totalAmount').value;
-            const filename = `按分_${startDate}_${amount}.csv`;
+            const amount = document.getElementById('totalAmount').value.replace(/,/g, '');
+            const filename = `按分計算_${startDate}_${amount}.csv`;
 
-            const csvContent = "\uFEFF" + csv.join('\n'); // BOM付きで文字化け防止
+            const csvContent = "\uFEFF" + csv.join('\n');
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -488,7 +756,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(url); // メモリリーク防止
+            URL.revokeObjectURL(url);
         }
 
         async function exportPDF() {
@@ -498,8 +766,8 @@
             }
 
             const startDate = document.getElementById('startDate').value.replace(/-/g, '');
-            const amount = document.getElementById('totalAmount').value;
-            const filename = `按分_${startDate}_${amount}.pdf`;
+            const amount = document.getElementById('totalAmount').value.replace(/,/g, '');
+            const filename = `按分計算_${startDate}_${amount}.pdf`;
 
             const options = {
                 margin: [10, 10, 10, 10],
